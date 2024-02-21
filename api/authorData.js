@@ -1,22 +1,6 @@
 import client from '../utils/client';
 
-
 const endpoint = client.databaseURL;
-
-
-export {
-  getAuthors,
-  createAuthor,
-  getSingleAuthor,
-  deleteSingleAuthor,
-  updateAuthor,
-  getAuthorBooks,
-};
-
-
-
-
-
 
 // FIXME: UPDATE AUTHOR
 const updateAuthor = (payload) => new Promise((resolve, reject) => {
@@ -49,13 +33,26 @@ const getAuthors = () => new Promise((resolve, reject) => {
 });
 
 // FIXME: CREATE AUTHOR
-const createAuthor = (payload) => new Promise((resolve, reject) =>  {
-  fetch(`$endpoint}/authors.json`, {
+const createAuthor = (payload) => new Promise((resolve, reject) => {
+  fetch('$endpoint}/authors.json', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+// FIXME: DELETE AUTHOR
+const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/authors/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
     .then((response) => response.json())
     .then((data) => resolve(data))
@@ -72,17 +69,14 @@ const getSingleAuthor = () => new Promise((resolve, reject) => {
   })
     .then((response) => response.json())
     .then((data) => resolve(Object.values(data)))
-    .catch(reject);;
-
-// FIXME: DELETE AUTHOR
-const deleteSingleAuthor =  (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/authors/${firebaseKey}.json`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(data))
     .catch(reject);
 });
+
+export {
+  getAuthors,
+  createAuthor,
+  getSingleAuthor,
+  deleteSingleAuthor,
+  updateAuthor,
+  getAuthorBooks,
+};
