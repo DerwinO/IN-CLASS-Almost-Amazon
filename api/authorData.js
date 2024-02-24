@@ -34,7 +34,7 @@ const getAuthors = () => new Promise((resolve, reject) => {
 
 // FIXME: CREATE AUTHOR
 const createAuthor = (payload) => new Promise((resolve, reject) => {
-  fetch('$endpoint}/authors.json', {
+  fetch(`${endpoint}/authors.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
