@@ -1,6 +1,6 @@
 // for merged promises
 import { getSingleBook } from './bookData';
-import { getSingleAuthor } from './authorData';
+import { getAuthorBooks, getSingleAuthor } from './authorData';
 
 const getBookDetails = (firebaseKey) => new Promise((resolve, reject) => {
   // GET SINGLE BOOK
@@ -12,4 +12,19 @@ const getBookDetails = (firebaseKey) => new Promise((resolve, reject) => {
   // Create an object that has book data and an object named authorObject
 });
 
-export default getBookDetails;
+// const getAuthorDetails = (firebaseKey) => new Promise((resolve, reject) => {
+//   // GET SINGLE AUTHOR
+//   getSingleAuthor(firebaseKey).then((authorObject) => {
+//     getSingleAuthor(authorObject.book_id)
+//       .then((bookObject) => resolve({ ...authorObject, bookObject }));
+//   }).catch(reject);
+// });
+
+const getAuthorDetails = async (firebaseKey) => { // the async keyword let's JS know this is asynchronous function (promise)
+  const authorObject = await getSingleAuthor(firebaseKey); // await stops the code in this function and waits for the response. This is like using .then
+  const authorBooks = await getAuthorBooks(firebaseKey); // this function uses the data response from the bookObject
+
+  return { ...authorObject, books: authorBooks };
+};
+
+export { getBookDetails, getAuthorDetails };
