@@ -59,7 +59,7 @@ const domEvents = () => {
     // Click Event for Author Details
 
     if (e.target.id.includes('view-author-btn')) {
-      console.warn('AUTHOR DETAILS');
+      console.warn('AUTHOR');
       const [, firebaseKey] = e.target.id.split('--');
       getAuthorDetails(firebaseKey).then(viewAuthor);
     }
